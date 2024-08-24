@@ -62,6 +62,8 @@ body {
     border-radius: 5px; /* Bordes redondeados */
     cursor: pointer; /* Cambia el cursor al pasar sobre el elemento */
     transition: background-color 0.3s, color 0.3s; /* Transición suave */
+    color: black; /* Cambia el color del texto a negro */
+    text-decoration: none; /* Elimina el subrayado */
 }
 
 #botones:hover {

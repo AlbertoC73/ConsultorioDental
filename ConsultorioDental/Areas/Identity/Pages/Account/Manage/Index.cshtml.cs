@@ -6,6 +6,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using ConsultorioDental.Utilidades;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -58,6 +59,11 @@ namespace ConsultorioDental.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            //
+            //
+            [Display(Name = "Mensaje de Administrador")]
+            public string AdminMessage { get; set; }
         }
 
         private async Task LoadAsync(IdentityUser user)
@@ -109,6 +115,25 @@ namespace ConsultorioDental.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
+
+            //
+            // Lógica para cambiar los roles según el AdminMessage
+            if (User.IsInRole(DS.Role_Paciente) && Input.AdminMessage == "serAdministrador")
+            {
+                // Cambiar de Cliente a Administrador
+                await _userManager.RemoveFromRoleAsync(user, DS.Role_Paciente);
+                await _userManager.AddToRoleAsync(user, DS.Role_Dentista);
+                await _signInManager.RefreshSignInAsync(user);
+            }
+            else if (User.IsInRole(DS.Role_Dentista) && Input.AdminMessage == "bajar")
+            {
+                // Cambiar de Administrador a Usuario
+                await _userManager.RemoveFromRoleAsync(user, DS.Role_Dentista);
+                await _userManager.AddToRoleAsync(user, DS.Role_Paciente);
+                await _signInManager.RefreshSignInAsync(user);
+            }
+            //
+            //
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

@@ -1,5 +1,6 @@
 ﻿@page
 @model IndexModel
+@using ConsultorioDental.Utilidades
 @{
     ViewData["Title"] = "Profile";
     ViewData["ActivePage"] = ManageNavPages.Index;
@@ -16,10 +17,29 @@
                 <label asp-for="Username" class="form-label"></label>
             </div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number."/>
+                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number." />
                 <label asp-for="Input.PhoneNumber" class="form-label"></label>
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
+
+            <div>
+                @if (!User.IsInRole(DS.Role_Dentista))
+                {
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.AdminMessage" class="form-control" placeholder="Mensaje de Roles" />
+                        <label asp-for="Input.AdminMessage" class="form-label">Mensaje de Roles</label>
+                        <span asp-validation-for="Input.AdminMessage" class="text-danger"></span>
+                    </div>
+                }
+                else
+                {
+                    <div class="mb-3">
+                        <input type="hidden" id="AdminMessage" name="Input.AdminMessage" value="" />
+                        <button type="button" class="w-20 btn btn-lg btn-warning" onclick="confirmRoleChange()">Bajar Rol</button>
+                    </div>
+                }
+            </div>
+
             <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
         </form>
     </div>
@@ -27,4 +47,15 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script type="text/javascript">
+        function confirmRoleChange() {
+            var isConfirmed = confirm("¿Seguro que quiere bajar de rol?");
+            if (isConfirmed) {
+                document.getElementById("AdminMessage").value = "bajar";
+                document.getElementById("profile-form").submit();
+            } else {
+                document.getElementById("AdminMessage").value = "";
+            }
+        }
+    </script>
 }

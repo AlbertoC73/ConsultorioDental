@@ -38,16 +38,16 @@
                         
                         @if (User.IsInRole(DS.Role_Dentista) && Context.Request.Path != "/")
                         {
-                            <li id="botones"><a asp-area="Admin" asp-controller="Tratamiento" asp-action="Index">Tratamientos</a></li>
-                            <li id="botones"><a asp-area="Admin" asp-controller="Usuario" asp-action="Index">Usuarios</a></li>
-                            <li id="botones"><a asp-area="Admin" asp-controller="Cita" asp-action="Index">Citas</a></li>
-                            <li id="botones"><a asp-area="Admin" asp-controller="Inventario" asp-action="Index">Inventario</a></li>
+                            <a id="botones" asp-area="Admin" asp-controller="Tratamiento" asp-action="Index">Tratamientos</a>
+                            <a id="botones" asp-area="Admin" asp-controller="Usuario" asp-action="Index">Usuarios</a>
+                            <a id="botones" asp-area="Admin" asp-controller="Cita" asp-action="Index">Citas</a>
+                            <a id="botones" asp-area="Admin" asp-controller="Inventario" asp-action="Index">Inventario</a>
                         }
                         @if (User.IsInRole(DS.Role_Paciente) && Context.Request.Path != "/")
                         {
-                            <li id="botones"><a asp-area="Admin" asp-controller="Tratamiento" asp-action="Index">Tratamientos</a></li>
-                            <li id="botones"><a  asp-area="Admin" asp-controller="Cita" asp-action="Index">Citas</a></li>
-                            <li id="botones"><a asp-area="Admin" asp-controller="Usuario" asp-action="Index">Dentistas</a></li>
+                            <a id="botones" asp-area="Admin" asp-controller="Tratamiento" asp-action="Index">Tratamientos</a>
+                            <a id="botones" asp-area="Admin" asp-controller="Cita" asp-action="Index">Citas</a>
+                            <a id="botones" asp-area="Admin" asp-controller="Usuario" asp-action="Index">Dentistas</a>
                         }
 
                         @* @if (User.IsInRole(DS.Role_Dentista))
